@@ -14,18 +14,18 @@ if __name__ == '__main__':
     if not os.path.exists(TMP_FOLDER):
         os.makedirs(TMP_FOLDER)
 
-    print("loading text..")
+    #print("loading text..")
     T0 = time.time()
     source_text_filename = 'eng_wiki.txt'
     source_text_path = os.path.join(FILES_FOLDER, source_text_filename)
     en_text = load_text(source_text_path)
     T1 = time.time()
-    print("\tdone in {0:.2f} sec".format(T1-T0))
+    #print("\tdone in {0:.2f} sec".format(T1-T0))
 
     tmp_folder_content = os.listdir(TMP_FOLDER)
     # If temp folder doesn't yet contain serialized token list, tokenize text and serialize tokens
     if len(tmp_folder_content) == 0:
-        print("tokenizing words..")
+        #print("tokenizing words..")
         tokens = tokenize_words(en_text)
         tokenized_words_filename = 'tokenized_' + source_text_filename
         tokenized_words_path = os.path.join(TMP_FOLDER, tokenized_words_filename)
@@ -33,24 +33,24 @@ if __name__ == '__main__':
 
     # Otherwise, deserialize tokens list. Much faster, as no need to wait tokenization time
     else:
-        print("temporary file found. Deserializing words..")
+        #print("temporary file found. Deserializing words..")
         tokenized_words_filename = tmp_folder_content[0]
         tokenized_words_path = os.path.join(TMP_FOLDER, tokenized_words_filename)
         tokens = deserialize(tokenized_words_path)
     
     T2 = time.time()  
-    print("\tdone in {0:.2f} sec".format(T2-T1))
+    #print("\tdone in {0:.2f} sec".format(T2-T1))
 
-    print("building probabilistic language model..")
+    #print("building probabilistic language model..")
     language_model = build_prob_language_model(tokens)
     T3 = time.time()
-    print("\tdone in {0:.2f} sec".format(T3-T2))
+    #print("\tdone in {0:.2f} sec".format(T3-T2))
 
-    print("generating output text..")
+    #print("generating output text..")
     final_text = generate_text_using_trigrams(language_model, N_WORDS)
     T4 = time.time()
-    print("\tdone in {0:.2f} sec".format(T4-T3))
+    #print("\tdone in {0:.2f} sec".format(T4-T3))
 
-    print("\ntotal execution time: {0:.2f} sec".format(T4-T0))
+    #print("\ntotal execution time: {0:.2f} sec".format(T4-T0))
     response = {'error': 'false', 'data': final_text}
     print(json.dumps(response))

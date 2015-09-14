@@ -23,7 +23,7 @@ def deserialize(path):
 	"""
 	with codecs.open(path, 'r', 'utf-8') as in_file:
 		obj_str = in_file.read()
-	print(len(obj_str), "symbols deserialized")
+	#print(len(obj_str), "symbols deserialized")
 	obj = ast.literal_eval(obj_str)
-	print("object of type {0} deserialized, length = {1}".format(type(obj), len(obj)))
+	#print("object of type {0} deserialized, length = {1}".format(type(obj), len(obj)))
 	return obj
